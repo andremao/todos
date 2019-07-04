@@ -143,7 +143,7 @@
 				}
 			});
 
-			$('#todoListBox').on('click', '.destroy', function () {
+			$('#todoListBox').on('click', '.destroy', function (e) {
 				var yn = confirm('Are you sure delete?');
 				if (yn) {
 					var label = $(this).data('label');
@@ -153,15 +153,17 @@
 					todos.splice(index, 1);
 					renderList();
 				}
+				e.stopPropagation();
 			});
 
-			$('#todoListBox').on('dblclick', 'li', function () {
+			$('#todoListBox').on('click', 'li', function (e) {
 				$(this).addClass('editing');
 				var $edit = $(this).children('input.edit');
 				$edit.val($edit.data('label')).focus();
+				e.stopPropagation();
 			});
 
-			$('#todoListBox').on('dblclick', ':checkbox', function (e) {
+			$('#todoListBox').on('click', '.toggle', function (e) {
 				e.stopPropagation();
 			});
 
