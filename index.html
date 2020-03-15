@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Todo List</title>
+	<title>Todos</title>
 	<link rel="shortcut icon" type="image/x-icon" href="img/logo.svg">
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/index.css">
@@ -15,6 +15,10 @@
 	<section class="todoapp">
 		<header class="header">
 			<h1>todos</h1>
+			<div style="text-align: right;">
+				<button class="import_btn">Import Data</button>
+				<button class="export_btn">Export Data</button>
+			</div>
 			<input class="new-todo createtaskinput" placeholder="What needs to be done?" autofocus>
 		</header>
 		<!-- This section should be hidden by default and shown when there are todos -->
@@ -61,7 +65,10 @@
 			<!-- Hidden if no completed items are left ↓ -->
 			<button class="clear-completed">Clear completed</button>
 		</footer>
+
 	</section>
+
+	<!-- <section id="export_content"></section> -->
 
 	<script src="lib/jquery.min.js"></script>
 	<script src="lib/template-web.js"></script>
@@ -79,6 +86,35 @@
 		{{/each}}
 	</script>
 	<script>
+
+		; (() => {
+			const qs = (...args) => document.querySelector(...args)
+			const getItem = (...args) => localStorage.getItem(...args)
+			const setItem = (...args) => localStorage.setItem(...args)
+
+			// const export_content = qs('#export_content')
+
+			qs('.import_btn').addEventListener('click', () => {
+				let data = prompt('Paste the data to be imported into the input box:\n\n')
+				if (!data) return
+				try {
+					data = JSON.parse(data)
+				} catch (error) {
+					return alert('Data rule error. Please use the standard array JSON string.')
+				}
+				if (!Array.isArray(data)) {
+					return alert('Data rule error. Please use the standard array JSON string.')
+				}
+				const todos = JSON.parse(getItem('todos'))
+				todos.push(...data.filter(v => !todos.some(v1 => v1.label === v.label)))
+				setItem('todos', JSON.stringify(todos))
+				location.reload()
+			})
+
+			qs('.export_btn').addEventListener('click', () => {
+				alert('Copy the following to import:\n\n' + getItem('todos') + '\n\n')
+			})
+		})()
 
 		$(function () {
 

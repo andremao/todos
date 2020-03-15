@@ -310,6 +310,32 @@ html .clear-completed:active {
   text-decoration: underline;
 }
 
+.import_btn,
+.export_btn {
+  margin: 15px;
+  cursor: pointer;
+}
+
+.import_btn {
+  margin-right: 0;
+}
+
+.import_btn:hover {
+  text-decoration: underline;
+}
+
+.export_btn:hover {
+  text-decoration: underline;
+}
+
+#export_content {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 2px 5px 10px 1px #ccc;
+  display: none;
+}
+
 .info {
   margin: 65px auto 0;
   color: #bfbfbf;
