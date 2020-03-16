@@ -112,7 +112,18 @@
 			})
 
 			qs('.export_btn').addEventListener('click', () => {
-				alert('Copy the following to import:\n\n' + getItem('todos') + '\n\n')
+				const todosStr = getItem('todos')
+				const input = document.createElement('input');
+				input.setAttribute('readonly', 'readonly'); // Prevent the soft keyboard from popping up on the phone
+				input.setAttribute('value', todosStr);
+				document.body.appendChild(input);
+				// input.setSelectionRange(0, 9999);
+				input.select();
+				const ok = document.execCommand('copy');
+				if (ok) {
+					document.body.removeChild(input);
+					alert('The following data has been copied to the clipboard:\n\n' + todosStr + '\n\n')
+				}
 			})
 		})()
 
